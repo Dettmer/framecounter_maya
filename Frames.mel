@@ -1,0 +1,30 @@
+//erzeugt eine Funktion für den aktuellen Frame
+global proc string[] showCurrentFrame ()
+{
+   string $currentFrame[];
+   $currentFrame[0] = `currentTime -q`;
+   return $currentFrame;
+}
+
+//teil das Display in ein Raster von 10 x 10 
+  
+for( $b=0; $b<10; ++$b ) {
+for( $s=0; $s<10; ++$s ) {
+headsUpDisplay -removePosition $b $s;
+}
+}
+
+// hier wird festgelegt wie der Frame im Viewport angezeigt wird            
+headsUpDisplay -section         7
+              -block            0
+              -blockAlignment   "center"
+              -blockSize        "medium"
+              -label            ""
+              -dataFontSize    "small"
+              -command
+        
+               "showCurrentFrame"
+               -attachToRefresh  showCurrentFrame;
+
+//lade den hud            
+expression -n "hudRefresh"
